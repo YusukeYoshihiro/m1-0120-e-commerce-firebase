@@ -7,6 +7,10 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 import CollectionPage from '../collection/CollectionPage';
 import {firestore, convertCollectionSnapShotToMap} from '../../firebase/firebase.util';
 import {updateCollection} from '../../redux/shop/shop.actions';
+import WithSpinner from '../../components/with-spinner/with-spinner.component';
+
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 const ShopPage = ({match, updateCollection}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,8 +41,14 @@ const ShopPage = ({match, updateCollection}) => {
       collections.map(({ id, ...otherCollectionProps }) => (
         <CollectionPreview key={id} {...otherCollectionProps} />
       ))} */}
-    {!isLoading && <Route exact path={`${match.path}`} component={CollectionsOverview} />}
-    {!isLoading && <Route path={`${match.path}/:collectionId`} component={CollectionPage} />}
+    <Route exact path={`${match.path}`} render={(props)=>(
+      <CollectionsOverviewWithSpinner isLoading={isLoading} {...props} />
+    )} />
+    <Route path={`${match.path}/:collectionId`} render={(props)=>(
+      <CollectionPageWithSpinner isLoading={isLoading} {...props} />
+    )} />
+    {/* <Route exact path={`${match.path}`} component={CollectionsOverview} />
+    <Route path={`${match.path}/:collectionId`} component={CollectionPage} /> */}
   </div>
 )};
 
