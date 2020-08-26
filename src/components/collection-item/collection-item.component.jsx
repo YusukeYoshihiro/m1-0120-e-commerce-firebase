@@ -9,7 +9,7 @@ import {
   BackgroundImage,
   NameContainer,
   PriceContainer,
-} from "./collection-styles.styles";
+} from "./collection-item.styles";
 
 // import CustomButton from "../custom-button/custom-button.component";
 import { addItem } from "../../redux/cart/cart.actions";

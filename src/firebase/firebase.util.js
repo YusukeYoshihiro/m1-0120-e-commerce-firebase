@@ -51,6 +51,28 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return userRef;
 }
 
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+
+    //this will return us a reference object
+    const collectionRef = firestore.collection(collectionKey);
+
+    //to prevent inconsistency or unpredictability in the code, we implement a batch write
+    //it is essentially just a way to group our calls together in to one big request
+    const batch = firestore.batch();
+
+    //loop over the objects
+    objectToAdd.forEach(obj => {
+        //this tell the firebase to give us a new document reference in 'collection' and randomly generate an ID for us
+        const newDocRef = collectionRef.doc();
+
+        //set the value (each obj) to the document that we newly created
+        batch.set(newDocRef, obj);
+    });
+
+    //fire off/execute the request to firestore
+    return await batch.commit();
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
