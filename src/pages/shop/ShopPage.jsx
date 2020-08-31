@@ -16,7 +16,7 @@ const ShopPage = ({match, updateCollection}) => {
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(()=>{
-    let unsubscribeFromSnapShot = null;
+    // let unsubscribeFromSnapShot = null;
 
     const collectionRef = firestore.collection('collection');
 
